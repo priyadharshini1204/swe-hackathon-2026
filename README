@@ -1,1 +1,34 @@
+# SWE-bench Pro GitHub Actions Agent (Claude)
+
+## Overview
+This repository implements an end-to-end SWE-bench Pro evaluation pipeline using GitHub Actions and an AI coding agent (Claude by Anthropic).
+
+The workflow:
+1. Sets up the OpenLibrary repository inside a Docker container
+2. Runs pre-verification tests (expected to fail)
+3. Uses Claude to generate a fix
+4. Applies the generated patch
+5. Runs post-verification tests (expected to pass)
+6. Generates all required SWE-bench artifacts
+
+## Task
+- **Task ID:** internetarchive__openlibrary-c4eebe6677acc4629cb541a98d5e91311444f5d4
+- **Repository:** Internet Archive OpenLibrary
+- **Goal:** Improve ISBN import logic by preferring staged records over external API calls
+
+## AI Agent Used
+**Claude (Anthropic)**  
+Chosen for strong code reasoning and patch generation on large Python codebases.
+
+## How It Works
+- `setup_repository.sh` prepares the OpenLibrary testbed
+- `run_agent.py`:
+  - Runs failing tests
+  - Sends failure logs to Claude
+  - Extracts and applies a git patch
+- `extract_metrics.py` generates `result.json`
+- GitHub Actions orchestrates the full flow
+
+## Required Secrets
+Set this GitHub Actions secret:
 
